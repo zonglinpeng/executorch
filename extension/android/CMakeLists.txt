@@ -71,6 +71,7 @@ target_include_directories(
 target_compile_options(executorch_jni PUBLIC ${_common_compile_options})
 
 if(EXECUTORCH_BUILD_LLAMA_JNI)
+  target_sources(executorch_jni PRIVATE jni/jni_layer_llama.cpp)
   set(LLAMA_RUNNER_PATH
       ${CMAKE_CURRENT_BINARY_DIR}/../../examples/models/llama2/runner/libllama_runner.a
   )
@@ -89,31 +90,17 @@ if(EXECUTORCH_BUILD_LLAMA_JNI)
   target_link_options_shared_lib(quantized_ops_lib)
 
   if(TARGET pthreadpool)
-    set(LLAMA_JNI_SRCS jni/jni_layer_llama.cpp
-                       ../../backends/xnnpack/threadpool/cpuinfo_utils.cpp
-    )
-  else()
-    set(LLAMA_JNI_SRCS jni/jni_layer_llama.cpp)
-  endif()
-  add_library(executorch_llama_jni SHARED ${LLAMA_JNI_SRCS})
-  if(TARGET pthreadpool)
-    target_compile_definitions(executorch_llama_jni PRIVATE ET_USE_THREADPOOL=1)
+    target_sources(executorch_jni PRIVATE ../../backends/xnnpack/threadpool/cpuinfo_utils.cpp)
+    target_compile_definitions(executorch_jni PRIVATE ET_USE_THREADPOOL=1)
     target_include_directories(
-      executorch_llama_jni
+      executorch_jni
       PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/../../backends/xnnpack/third-party/cpuinfo/include
-    )
-    target_include_directories(
-      executorch_llama_jni
-      PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/../../backends/xnnpack/third-party/pthreadpool/include
     )
   endif()
-  target_include_directories(
-    executorch_llama_jni PRIVATE ${_common_include_directories}
-  )
   target_link_libraries(
-    executorch_llama_jni
+    executorch_jni
     ${link_libraries}
     llama_runner
     custom_ops
@@ -122,7 +109,6 @@ if(EXECUTORCH_BUILD_LLAMA_JNI)
     quantized_kernels
     quantized_ops_lib
   )
-  target_compile_options(executorch_llama_jni PUBLIC ${_common_compile_options})
   if(EXECUTORCH_USE_TIKTOKEN)
     set(ABSL_ENABLE_INSTALL ON)
     set(_pic_flag ${CMAKE_POSITION_INDEPENDENT_CODE})
@@ -136,6 +122,6 @@ if(EXECUTORCH_BUILD_LLAMA_JNI)
       ${CMAKE_CURRENT_BINARY_DIR}/re2
     )
     set(CMAKE_POSITION_INDEPENDENT_CODE ${_pic_flag})
-    target_link_libraries(executorch_llama_jni re2::re2)
+    target_link_libraries(executorch_jni re2::re2)
   endif()
 endif()
