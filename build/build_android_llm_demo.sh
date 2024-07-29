@@ -88,7 +88,7 @@ build_aar() {
   find jni -type f -name "libexecutorch_jni.so" -exec bash -c 'mv "$1" "${1/_jni/}"' bash {} \;
   # Zip all necessary files into the AAR file
   zip -r executorch.aar libs jni/*/libexecutorch.so AndroidManifest.xml
-  zip -r executorch-llama.aar libs jni/*/libexecutorch_llama_jni.so AndroidManifest.xml
+  zip -r executorch-llama.aar libs jni/*/libexecutorch_jni.so AndroidManifest.xml
   popd
 }
 
