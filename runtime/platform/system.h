@@ -33,7 +33,7 @@ extern "C" {
  * @param[in] addr Address to the symbol we are looking for in shared libraries.
  * @retval The path to the shared library containing the symbol.
  */
-inline const char* et_pal_get_shared_library_name(const void* addr) {
+inline const char* et_pal_get_shared_library_name(const void* ) {
 #if defined(ET_USE_LIBDL)
   Dl_info info;
   if (dladdr(addr, &info) && info.dli_fname) {
