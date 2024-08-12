@@ -198,8 +198,7 @@ cc_library {
         "flatbuffer_headers",
     ],
     generated_headers: [
-        "executorch_program_gen",
-        "executorch_scalar_type_gen",
+        "executorch_fbs_gen",
     ],
     cflags: [
         "-Wno-unused-parameter",
@@ -221,21 +220,18 @@ cc_binary {
 }
 
 cc_genrule {
-    name: "executorch_program_gen",
+    name: "executorch_fbs_gen",
     host_supported: true,
     tools: ["flatc"],
-    srcs: ["schema/program.fbs"],
-    out: ["executorch/schema/program_generated.h"],
+    srcs: [
+        "schema/program.fbs",
+        "schema/scalar_type.fbs"
+    ],
+    out: [
+        "executorch/schema/program_generated.h",
+        "executorch/schema/scalar_type_generated.h"
+    ],
     cmd: "$(location flatc) --cpp --cpp-std c++11 --gen-mutable --scoped-enums --include-prefix executorch/schema/ " +
     "-o $(genDir)/executorch/schema/ $(in)"
 }
 
-cc_genrule {
-    name: "executorch_scalar_type_gen",
-    host_supported: true,
-    tools: ["flatc"],
-    srcs: ["schema/scalar_type.fbs"],
-    out: ["executorch/schema/scalar_type_generated.h"],
-    cmd: "$(location flatc) --cpp --cpp-std c++11 --gen-mutable --scoped-enums " +
-    "-o $(genDir)/executorch/schema/ $(in)"
-}
