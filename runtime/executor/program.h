@@ -27,17 +27,13 @@ namespace executorch_flatbuffer {
 struct Program;
 } // namespace executorch_flatbuffer
 
-namespace torch {
-namespace executor {
+namespace executorch {
+namespace runtime {
+
 namespace testing {
 // Provides test access to private Program methods.
 class ProgramTestFriend;
 } // namespace testing
-} // namespace executor
-} // namespace torch
-
-namespace executorch {
-namespace runtime {
 
 namespace deserialization {
 // Provides Tensor deserializaiton access to private Program methods.
@@ -204,7 +200,7 @@ class Program final {
   friend class Executor;
   friend class Method;
   friend class deserialization::TensorParser;
-  friend class torch::executor::testing::ProgramTestFriend;
+  friend class testing::ProgramTestFriend;
 
   const executorch_flatbuffer::Program* get_internal_program() const {
     return internal_program_;
