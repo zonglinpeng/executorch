@@ -17,13 +17,9 @@ retry () {
 }
 
 install_executorch() {
-  which pip
   # Install executorch, this assumes that Executorch is checked out in the
-  # current directory. The --extra-index-url options tell pip to look on the
-  # pytorch servers for nightly and pre-release versions of torch packages.
-  pip install . --no-build-isolation -v \
-      --extra-index-url https://download.pytorch.org/whl/test/cpu \
-      --extra-index-url https://download.pytorch.org/whl/nightly/cpu
+  # current directory.
+  ./install_requirements.sh
   # Just print out the list of packages for debugging
   pip list
 }
