@@ -26,7 +26,7 @@ phases:
       - |
         adb -s $DEVICEFARM_DEVICE_UDID shell "am start -W -n org.pytorch.minibench/org.pytorch.minibench.BenchmarkActivity --es model_path /data/local/tmp/hi.pte || echo \": -1\"" | tee $DEVICEFARM_LOG_DIR/instrument.log
 
-        false
+        
 
   post_test:
     commands:
