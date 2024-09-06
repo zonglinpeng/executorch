@@ -28,28 +28,6 @@ class LlavaRunner : public MultimodalRunner {
       const std::string& tokenizer_path,
       const float temperature = 0.8f)
       : MultimodalRunner(model_path, tokenizer_path, temperature){};
-  bool is_loaded();
-  Error load();
-  Error generate(
-      std::vector<Image> images,
-      const std::string& prompt,
-      int32_t seq_len = 1024,
-      std::function<void(const std::string&)> token_callback = {},
-      std::function<void(const ::executorch::extension::llm::Stats&)>
-          stats_callback = {});
-  Error prefill_images(std::vector<Image>& images, int64_t& start_pos);
-  Result<uint64_t> prefill_prompt(
-      const std::string& prompt,
-      int64_t& start_pos,
-      int8_t bos = 0,
-      int8_t eos = 0);
-  Error generate_from_pos(
-      const std::string& prompt,
-      int32_t seq_len = 1024,
-      int64_t start_pos = 0,
-      std::function<void(const std::string&)> token_callback = {},
-      std::function<void(const ::executorch::extension::llm::Stats&)>
-          stats_callback = {});
 
  private:
   inline static const std::string kPresetPrompt =
