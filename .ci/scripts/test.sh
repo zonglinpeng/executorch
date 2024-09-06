@@ -176,7 +176,7 @@ test_model_with_qnn() {
   fi
 
   # Use SM8450 for S22, SM8550 for S23, and SM8560 for S24
-  QNN_CHIPSET=SM8450
+  QNN_CHIPSET=SM8650
 
   "${PYTHON_EXECUTABLE}" -m examples.qualcomm.scripts.${EXPORT_SCRIPT} -b ${CMAKE_OUTPUT_DIR} -m ${QNN_CHIPSET} --compile_only
   EXPORTED_MODEL=./${EXPORT_SCRIPT}/${EXPORTED_MODEL_NAME}
