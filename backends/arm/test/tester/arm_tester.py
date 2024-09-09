@@ -61,7 +61,7 @@ class Partition(tester.Partition):
                     break
             assert to_print, "No TOSA nor Vela compile spec found"
         else:
-            to_print = "No delegate with name 'lowered_module_0 found in graph module."
+            to_print = "No delegate with name 'lowered_module_0 found in graph module. Expecting at least one partition."
         _dump_str(to_print, path_to_dump)
 
 
